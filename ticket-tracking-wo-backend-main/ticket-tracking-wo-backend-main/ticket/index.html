@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Event Ticket Attendance Tracking</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
+</head>
+<body>
+  <!-- Start Screen -->
+  <section id="start" class="page">
+    <h1><strong>EVENT TICKET ATTENDANCE TRACKING</strong></h1>
+    <div class="role-buttons">
+      <div class="role" onclick="showPage('studentLogin')">
+        <div class="icon">S</div>
+        <p>STUDENT</p>
+      </div>
+      <div class="role" onclick="showPage('adminLogin')">
+        <div class="icon">A</div>
+        <p>ADMIN</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Student Login -->
+  <section id="studentLogin" class="page hidden">
+    <h1><strong>EVENT TICKET ATTENDANCE TRACKING</strong></h1>
+    <h2>STUDENT</h2>
+    <form>
+      <label>EMAIL</label>
+      <input type="email" id="studentEmail">
+      <label>PASSWORD</label>
+      <div class="password-wrapper">
+        <input type="password" id="studentPassword">
+        <button type="button" class="toggle-password-btn" data-target="studentPassword" aria-label="Toggle password visibility">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" class="eye-icon">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </button>
+      </div>
+      <button type="button" onclick="studentLogin()">LOG IN</button>
+    </form>
+    <p class="link" onclick="showPage('accountCreation')">NO ACCOUNT YET?</p>
+  </section>
+
+  <!-- Admin Login -->
+  <section id="adminLogin" class="page hidden">
+    <h1><strong>EVENT TICKET ATTENDANCE TRACKING</strong></h1>
+    <h2>ADMIN</h2>
+    <form>
+      <label>EMAIL</label>
+      <input type="email" id="adminEmail">
+      <label>PASSWORD</label>
+      <div class="password-wrapper">
+        <input type="password" id="adminPassword">
+        <button type="button" class="toggle-password-btn" data-target="adminPassword" aria-label="Toggle password visibility">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" class="eye-icon">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </button>
+      </div>
+      <button type="button" onclick="adminLogin()">LOG IN</button>
+    </form>
+    <p class="link" onclick="showPage('accountCreation')">NO ACCOUNT YET?</p>
+  </section>
+
+  <!-- Account Creation Step 1 -->
+  <section id="accountCreation" class="page hidden">
+    <h1><strong>ACCOUNT CREATION</strong></h1>
+    <div class="toggle">
+      <label>
+        <input type="radio" name="role" value="student" checked> STUDENT
+      </label>
+      <label>
+        <input type="radio" name="role" value="admin"> ADMIN
+      </label>
+    </div>
+    <form>
+      <label>NAME</label>
+      <input type="text" id="studentRegisterName">
+      <label>STUDENT NUMBER</label>
+      <input type="text" id="studentNumber">
+      <label>YEAR LEVEL</label>
+      <input type="text" id="yearLevel">
+      <label>DEPARTMENT</label>
+      <input type="text" id="department">
+      <label>COURSE</label>
+      <input type="text" id="course">
+      <button type="button" onclick="validateStep1()">PROCEED</button>
+    </form>
+  </section>
+
+  <!-- Account Creation Step 2 -->
+  <section id="accountCreation2" class="page hidden">
+    <h1><strong>ACCOUNT CREATION</strong></h1>
+    <form>
+      <label>EMAIL</label>
+      <input type="email" id="registerEmail">
+
+      <label>PASSWORD</label>
+      <div class="password-wrapper">
+        <input type="password" id="registerPassword">
+        <button type="button" class="toggle-password-btn" data-target="registerPassword" aria-label="Toggle password visibility">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" class="eye-icon">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </button>
+      </div>
+
+      <label>CONFIRM PASSWORD</label>
+      <div class="password-wrapper">
+        <input type="password" id="registerConfirmPassword">
+        <button type="button" class="toggle-password-btn" data-target="registerConfirmPassword" aria-label="Toggle password visibility">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" class="eye-icon">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </button>
+      </div>
+
+      <button type="button" onclick="registerUser()">CREATE ACCOUNT</button>
+    </form>
+  </section>
+
+  <!-- Account Success -->
+  <section id="accountSuccess" class="page hidden">
+    <h2><strong>ACCOUNT CREATED SUCCESSFULLY!</strong></h2>
+    <button type="button" onclick="showPage('start')">GO TO LOGIN PAGE</button>
+  </section>
+
+  <!-- Student Dashboard -->
+<section id="studentHome" class="page hidden">
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+  <button class="user-icon" onclick="showPage('studentAccount')">👤</button>
+  <nav>
+    <button onclick="showPage('studentHome')">HOME</button>
+    <button onclick="showPage('studentHistory')">HISTORY</button>
+    <button onclick="showPage('start')">LOG OUT</button>
+  </nav>
+</aside>
+
+
+    <!-- Events area -->
+    <main class="events">
+      <div class="event-card">
+        <h3>EVENT TITLE 1</h3>
+        <p>Description of the event. Description of the event. Description of the event. Description of the event. Description of the event.</p>
+      </div>
+      <div class="event-card">
+        <h3>EVENT TITLE 2</h3>
+        <p>Description of the event. Description of the event. Description of the event. Description of the event. Description of the event.</p>
+      </div>
+      <div class="event-card">
+        <h3>EVENT TITLE 3</h3>
+        <p>Description of the event. Description of the event. Description of the event. Description of the event. Description of the event.</p>
+      </div>
+    </main>
+  </div>
+</section>
+
+<!-- Student Account -->
+<section id="studentAccount" class="page hidden">
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <button class="user-icon" onclick="showPage('studentAccount')">👤</button>
+      <nav>
+        <button onclick="showPage('studentHome')">HOME</button>
+        <button onclick="showPage('studentHistory')">HISTORY</button>
+        <button onclick="showPage('start')">LOG OUT</button>
+      </nav>
+    </aside>
+
+    <!-- Account details area -->
+    <main class="events">
+      <h2>STUDENT ACCOUNT</h2>
+      <div class="event-card"><strong>NAME:</strong> [placeholder]</div>
+      <div class="event-card"><strong>STUDENT NUMBER:</strong> [placeholder]</div>
+      <div class="event-card"><strong>YEAR LEVEL:</strong> [placeholder]</div>
+      <div class="event-card"><strong>DEPARTMENT:</strong> [placeholder]</div>
+      <div class="event-card"><strong>COURSE:</strong> [placeholder]</div>
+      <div class="event-card"><strong>EMAIL:</strong> [placeholder]</div>
+      <div class="event-card"><strong>PASSWORD:</strong> [placeholder]</div>
+    </main>
+  </div>
+</section>
+
+  <!-- Admin Dashboard -->
+  <section id="adminHome" class="page hidden">
+    <h2><strong>ADMIN DASHBOARD</strong></h2>
+    <button onclick="showPage('createEvent')">Create Event</button>
+    <button onclick="showPage('adminScanner')">Scanner</button>
+    <button onclick="showPage('start')">Log Out</button>
+  </section>
+
+<!-- Admin Scanner -->
+<section id="adminScanner" class="page hidden">
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <button class="user-icon" onclick="showPage('adminHome')">👤</button>
+      <nav>
+        <button onclick="showPage('adminHome')">HOME</button>
+        <button onclick="showPage('createEvent')">CREATE AN EVENT</button>
+        <button onclick="showPage('adminScanner')">SCANNER</button>
+        <button onclick="showPage('start')">LOG OUT</button>
+      </nav>
+    </aside>
+
+    <!-- Scanner area -->
+    <main class="events">
+      <h2>QR Code Scanner</h2>
+      <video id="scannerPreview" width="400" height="300"></video>
+      <p id="scannerResult">Scan a QR code to log attendance.</p>
+      <button onclick="startScanner()">Start Scanner</button>
+      <button onclick="stopScanner()">Stop Scanner</button>
+    </main>
+  </div>
+</section>
+
+  <!-- Other pages -->
+  <section id="studentHistory" class="page hidden"><h2>Student History</h2></section>
+  <section id="studentTicket" class="page hidden"><h2>Student Ticket</h2></section>
+  <section id="createEvent" class="page hidden"><h2>Create Event</h2></section>
+  <section id="adminScanner" class="page hidden"><h2>Admin Scanner</h2></section>
+
+  <script src="script.js"></script>
+</body>
+</html>
